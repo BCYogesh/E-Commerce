@@ -1,7 +1,12 @@
 import "./App.css";
+import Home from "./pages/Home";
 
 function App() {
-  return <div className="mt-3">App</div>;
+  return (
+    <div className="bg-gray-200">
+      <Home />
+    </div>
+  );
 }
 
 export default App;
