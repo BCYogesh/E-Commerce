@@ -7,3 +7,5 @@ https://dummyjson.com/products
 ## Tasks I do
 
 - List all products to the page
+- Search the product
+- Develop product detail page

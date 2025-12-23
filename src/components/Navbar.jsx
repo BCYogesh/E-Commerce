@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Navbar = ({ searchProduct, setSearchProduct, handleSearch }) => {
   return (
     <nav className="bg-orange-400 p-4 sticky top-0 z-10">
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-2xl cursor-pointer">
-          <a href="/">LOGO</a>
+          <Link to="/">LOGO</Link>
         </h2>
         <div>
           <input

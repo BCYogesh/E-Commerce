@@ -21,7 +21,7 @@ const ProductList = ({ searchQuery }) => {
       );
       setFilteredProducts(filteredPds);
     }
-  }, [searchQuery, products]);
+  }, [searchQuery]);
 
   const getAllProducts = async function () {
     try {
