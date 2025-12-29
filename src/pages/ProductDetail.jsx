@@ -20,12 +20,27 @@ const ProductDetail = () => {
     }
   };
 
+  const decreaseQuantity = function () {
+    setQuantity((prevQty) => {
+      let tempQty = prevQty - 1;
+      if (tempQty < 1) tempQty = 1;
+      return tempQty;
+    });
+  };
+
+  const increaseQuantity = function () {
+    setQuantity((prevQty) => {
+      let tempQty = prevQty + 1;
+      if (tempQty > productData?.stock) tempQty = productData?.stock;
+      return tempQty;
+    });
+  };
   console.log(productData);
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="product-detail flex   px-2 bg-gray-200 h-96 w-[90%] rounded-lg">
         <img
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
           src={productData?.images ? productData?.images[0] : ""}
           alt={productData?.title}
         />
@@ -53,14 +68,14 @@ const ProductDetail = () => {
           <div className="quantity flex gap-5 pt-4 text-center">
             <button
               className="border border-black px-4 cursor-pointer"
-              onClick={() => setQuantity(quantity - 1)}
+              onClick={() => decreaseQuantity()}
             >
               -
             </button>
             <p className="border border-black px-4">{quantity}</p>
             <button
               className="border border-black px-4 cursor-pointer"
-              onClick={() => setQuantity(quantity + 1)}
+              onClick={() => increaseQuantity()}
             >
               +
             </button>
