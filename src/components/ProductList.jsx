@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BASE_URL } from "../utils/apiURL";
 import Product from "./Product";
+import { SearchContext } from "../context/SearchContext";
 
-const ProductList = ({ searchQuery }) => {
+const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const { searchQuery } = useContext(SearchContext);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -33,8 +35,6 @@ const ProductList = ({ searchQuery }) => {
       console.error(err);
     }
   };
-
-  console.log("Hello");
 
   return (
     <>

@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const [productData, setProductData] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const { setCartItems } = useContext(CartContext);
   // To fetch product
   useEffect(() => {
     GetSingleProduct();
@@ -35,15 +38,40 @@ const ProductDetail = () => {
       return tempQty;
     });
   };
-  console.log(productData);
+
+  const addToCart = function () {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === productData.id);
+
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === productData.id ? { ...item, quantity: quantity } : item
+        );
+      }
+      return [
+        ...prevItems,
+        {
+          id: productData.id,
+          quantity: quantity,
+          price: productData.price,
+          title: productData.title,
+          image: productData.images[0],
+        },
+      ];
+    });
+    toast.success("Adding to shopping cart");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="product-detail flex   px-2 bg-gray-200 h-96 w-[90%] rounded-lg">
-        <img
-          className="h-full w-full object-contain"
-          src={productData?.images ? productData?.images[0] : ""}
-          alt={productData?.title}
-        />
+      <div className="product-detail flex   px-2 bg-white h-96 w-[90%] rounded-lg">
+        {productData?.images && (
+          <img
+            className="h-full w-full object-contain"
+            src={productData?.images[0]}
+            alt={productData?.title}
+          />
+        )}
         <div className="product-detail-r">
           <div className="title pt-8">
             <b>{productData?.title}</b>
@@ -81,7 +109,10 @@ const ProductDetail = () => {
             </button>
           </div>
           <div className="actions flex gap-5 pt-4">
-            <button className="px-4 py-2 bg-orange-300 text-black cursor-pointer">
+            <button
+              className="px-4 py-2 bg-orange-300 text-black cursor-pointer"
+              onClick={addToCart}
+            >
               Add to cart
             </button>
             <button className="px-4 py-2 bg-orange-400 text-black cursor-pointer">

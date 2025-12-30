@@ -9,3 +9,12 @@ https://dummyjson.com/products
 - List all products to the page
 - Search the product
 - Develop product detail page
+  - Increase && Decrease Quantities
+  - Add cart functionality
+  - Cart data passed to components using context.
+  - Cart items stored in local storage
+  - Click to add cart will notify Adding to shopping cart
+- Develop cart page
+  - It will shown all cart products
+  - Implemented clear cart button
+  - Calculate total price
