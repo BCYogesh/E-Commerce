@@ -8,6 +8,7 @@ import { CartContext } from "./context/CartContext";
 import { SearchContext } from "./context/SearchContext";
 import Cart from "./pages/Cart";
 import { ToastContainer } from "react-toastify";
+import Footer from "./components/Footer";
 
 function App() {
   const [searchProduct, setSearchProduct] = useState("");
@@ -43,6 +44,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </SearchContext.Provider>
     </CartContext.Provider>

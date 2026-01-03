@@ -19,7 +19,7 @@ const Cart = () => {
   if (cartItems.length === 0) {
     return (
       <div className="bg-white flex justify-center flex-col gap-4 items-center overflow-hidden min-h-screen">
-        <h2>Your shopping cart is Empty!</h2>
+        <h2>Your shopping cart is Empty ☹!</h2>
         <Link to={"/"} className="bg-orange-200 p-4 font-semibold rounded-lg">
           Go shopping now
         </Link>

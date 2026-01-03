@@ -14,7 +14,12 @@ const Product = ({ product }) => {
             Brand : <b>{product?.brand || "N/A"}</b>
           </p>
           <p className="text-sm line-clamp-2 mt-2">{product?.title}</p>
-          <p className="mt-2 text-center">Price : $ {product?.price}</p>
+          <p className="mt-2 text-center">
+            Price :{" "}
+            <span className="text-orange-600 font-semibold">
+              ${product?.price}
+            </span>
+          </p>
         </div>
       </div>
     </Link>
