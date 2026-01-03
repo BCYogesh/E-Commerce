@@ -28,7 +28,7 @@ const Cart = () => {
   }
 
   return (
-    <div>
+    <div className="grow">
       <ul className="grid grid-cols-6 p-4 font-semibold border-b bg-amber-200 sticky top-16">
         <li>S.No</li>
         <li>Product</li>

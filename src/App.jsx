@@ -37,14 +37,16 @@ function App() {
         value={{ searchProduct, setSearchProduct, handleSearch, searchQuery }}
       >
         <BrowserRouter>
-          <Navbar />
-          <ToastContainer position="top-right" autoClose={2000} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-          <Footer />
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <ToastContainer position="top-right" autoClose={2000} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+            <Footer />
+          </div>
         </BrowserRouter>
       </SearchContext.Provider>
     </CartContext.Provider>

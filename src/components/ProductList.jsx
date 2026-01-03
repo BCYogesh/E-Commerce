@@ -1,52 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BASE_URL } from "../utils/apiURL";
 import Product from "./Product";
-import { SearchContext } from "../context/SearchContext";
 
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const { searchQuery } = useContext(SearchContext);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-
-  useEffect(() => {
-    if (!searchQuery) {
-      setFilteredProducts(products);
-    } else {
-      const filteredPds = products.filter(
-        (product) =>
-          product?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product?.brand?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredProducts(filteredPds);
-    }
-  }, [searchQuery]);
-
-  const getAllProducts = async function () {
-    try {
-      const res = await fetch(BASE_URL + "/products?limit=50");
-      const data = await res.json();
-      setProducts(data.products);
-      setFilteredProducts(data.products);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+const ProductList = ({ filteredProducts }) => {
   return (
-    <>
-      <h1 className="font-medium text-2xl text-center bg-white shadow-lg p-2">
-        SEE OUR PRODUCTS
-      </h1>
-      <div className="flex flex-wrap items-center justify-center">
+    <div className="w-full px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {filteredProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

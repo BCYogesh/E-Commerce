@@ -6,8 +6,10 @@ https://dummyjson.com/products
 
 ## Tasks I do
 
-- List all products to the page
-- Search the product
+- Develop Product page (Home)
+  - List all products to the page
+  - Search the product
+  - List products based on categories
 - Develop product detail page
   - Increase && Decrease Quantities
   - Add cart functionality
@@ -18,3 +20,4 @@ https://dummyjson.com/products
   - It will shown all cart products
   - Implemented clear cart button
   - Calculate total price
+- Develop footer page
