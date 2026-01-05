@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
 import { BASE_URL } from "../utils/apiURL";
 import { SearchContext } from "../context/SearchContext";
+import { CategoryContext } from "../context/CategoryContext";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const { searchQuery } = useContext(SearchContext);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+
+  const { searchQuery } = useContext(SearchContext);
+  const { categories } = useContext(CategoryContext);
 
   useEffect(() => {
     getAllProducts();
@@ -26,26 +28,12 @@ const Home = () => {
     }
   }, [searchQuery]);
 
-  useEffect(() => {
-    getAllCategories();
-  }, []);
-
   const getAllProducts = async function () {
     try {
       const res = await fetch(BASE_URL + "/products?limit=50");
       const data = await res.json();
       setProducts(data.products);
       setFilteredProducts(data.products);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getAllCategories = async function () {
-    try {
-      const res = await fetch("https://dummyjson.com/products/categories");
-      const data = await res.json();
-      setCategories(data);
     } catch (err) {
       console.error(err);
     }
@@ -66,8 +54,6 @@ const Home = () => {
   const categoryGrocery = products.filter(
     (product) => product.category === categories[3]?.slug
   );
-
-  console.log(searchQuery);
 
   return (
     <>

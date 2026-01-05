@@ -10,9 +10,9 @@ const Product = ({ product }) => {
         </span>
         <img className="h-60" src={product?.thumbnail} alt={product?.title} />
         <div className="detail">
-          <p>
-            Brand : <b>{product?.brand || "N/A"}</b>
-          </p>
+          {product?.brand && (
+            <p className="text-sm">Brand : {product?.brand}</p>
+          )}
           <p className="text-sm line-clamp-2 mt-2">{product?.title}</p>
           <p className="mt-2 text-center">
             Price :{" "}

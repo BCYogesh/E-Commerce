@@ -4,12 +4,20 @@ Dummy Json using to get the data from this apis
 
 https://dummyjson.com/products
 
+## Installation
+
+- Styles - tailwindcss
+- Icons - react-icons
+- Routing - react-router-dom
+- Alerts - react-toastify
+
 ## Tasks I do
 
 - Develop Product page (Home)
   - List all products to the page
   - Search the product
-  - List products based on categories
+  - Create sidebar for list product categories
+  - List products based on click on category
 - Develop product detail page
   - Increase && Decrease Quantities
   - Add cart functionality

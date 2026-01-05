@@ -2,25 +2,34 @@ import { useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { SearchContext } from "../context/SearchContext";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-const Navbar = () => {
+const Navbar = ({ isSidebar, setIsSidebar }) => {
   const { cartItems, cartCount } = useContext(CartContext);
   const { searchProduct, setSearchProduct, handleSearch } =
     useContext(SearchContext);
   const location = useLocation();
 
-  const searchBar = location.pathname === "/";
+  const searchBar = location.pathname == "/";
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
   return (
-    <nav className="bg-orange-400 p-4 sticky top-0 z-10">
+    <nav className="bg-orange-400 p-4 sticky top-0 z-10 px-8">
       <div className="flex justify-between items-center">
-        <h2 className="font-bold text-2xl cursor-pointer">
-          <Link to="/">LOGO</Link>
-        </h2>
+        <div className="flex items-center gap-4 text-2xl">
+          <button
+            className="cursor-pointer"
+            onClick={() => setIsSidebar(!isSidebar)}
+          >
+            <RxHamburgerMenu />
+          </button>
+          <h2 className="font-bold  cursor-pointer">
+            <Link to="/">LOGO</Link>
+          </h2>
+        </div>
         {searchBar && (
           <div>
             <input
