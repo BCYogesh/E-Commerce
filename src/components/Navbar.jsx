@@ -31,10 +31,10 @@ const Navbar = ({ isSidebar, setIsSidebar }) => {
           </h2>
         </div>
         {searchBar && (
-          <div>
+          <div className="flex">
             <input
               type="text"
-              className="p-1 px-2 w-80 border border-black bg-white"
+              className="p-1 px-2 w-100 border border-black bg-white"
               placeholder="Search Product here..."
               value={searchProduct}
               onChange={(e) => setSearchProduct(e.target.value)}

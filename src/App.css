@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+@keyframes productShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-card {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+
+.shimmer-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.04),
+    transparent
+  );
+  animation: productShimmer 1.5s infinite;
+}
+
+@keyframes productDetailShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-card-detail {
+  position: relative;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.shimmer-card-detail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: productDetailShimmer 1.5s infinite;
+}

@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { toast } from "react-toastify";
+import ProductDetailShimmer from "../components/ProductDetailShimmer";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [productData, setProductData] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const { setCartItems } = useContext(CartContext);
   // To fetch product
   useEffect(() => {
@@ -20,6 +22,8 @@ const ProductDetail = () => {
       setProductData(data);
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,7 +49,7 @@ const ProductDetail = () => {
 
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === productData.id ? { ...item, quantity: quantity } : item
+          item.id === productData.id ? { ...item, quantity: quantity } : item,
         );
       }
       return [
@@ -62,7 +66,9 @@ const ProductDetail = () => {
     toast.success("Adding to shopping cart");
   };
 
-  return (
+  return isLoading ? (
+    <ProductDetailShimmer />
+  ) : (
     <div className="min-h-screen flex items-center justify-center">
       <div className="product-detail flex   px-2 bg-white h-96 w-[90%] rounded-lg">
         {productData?.images && (

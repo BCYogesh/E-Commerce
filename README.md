@@ -29,3 +29,5 @@ https://dummyjson.com/products
   - Implemented clear cart button
   - Calculate total price
 - Develop footer page
+- Develop Shimmer UI for better user experience
+
