@@ -67,7 +67,9 @@ const Cart = () => {
         </button>
         <h3>
           Total Items {cartCount} :{" "}
-          <span className="text-orange-600 font-semibold">${totalPrice} </span>
+          <span className="text-orange-600 font-semibold">
+            ${totalPrice.toFixed(2)}{" "}
+          </span>
         </h3>
       </div>
     </div>

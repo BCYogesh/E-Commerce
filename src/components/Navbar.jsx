@@ -5,16 +5,12 @@ import { SearchContext } from "../context/SearchContext";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = ({ isSidebar, setIsSidebar }) => {
-  const { cartItems, cartCount } = useContext(CartContext);
+  const { cartCount } = useContext(CartContext);
   const { searchProduct, setSearchProduct, handleSearch } =
     useContext(SearchContext);
   const location = useLocation();
 
   const searchBar = location.pathname == "/";
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }, [cartItems]);
 
   return (
     <nav className="bg-orange-400 p-4 sticky top-0 z-10 px-8">

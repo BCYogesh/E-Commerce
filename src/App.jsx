@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import { CategoryContext } from "./context/CategoryContext";
 import Category from "./pages/Category";
+import useLocalStorage from "./customHook/useLocalStorage";
 
 function App() {
   const [searchProduct, setSearchProduct] = useState("");
@@ -19,20 +20,11 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  const [cartItems, setCartItems] = useState(() => {
-    const storedCart = localStorage.getItem("cartItems");
-    if (!storedCart) return [];
-    try {
-      const parsed = JSON.parse(storedCart);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (err) {
-      return [];
-    }
-  });
-
   useEffect(() => {
     getAllCategories();
   }, []);
+
+  const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
 
   const getAllCategories = async function () {
     try {
