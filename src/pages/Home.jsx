@@ -4,18 +4,22 @@ import { BASE_URL } from "../utils/apiURL";
 import { SearchContext } from "../context/SearchContext";
 import { CategoryContext } from "../context/CategoryContext";
 import ProductShimmer from "../components/ProductShimmer";
+import useFetch from "../customHook/useFetch";
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useFetch(BASE_URL + "/products?limit=50");
 
   const { searchQuery } = useContext(SearchContext);
   const { categories } = useContext(CategoryContext);
 
   useEffect(() => {
-    getAllProducts();
-  }, []);
+    setFilteredProducts(products?.products);
+  }, [products?.products]);
 
   useEffect(() => {
     getFilterProducts();
@@ -23,9 +27,9 @@ const Home = () => {
 
   const getFilterProducts = function () {
     if (!searchQuery) {
-      setFilteredProducts(products);
+      setFilteredProducts(products?.products);
     } else {
-      const filteredPds = products.filter(
+      const filteredPds = products?.products.filter(
         (product) =>
           product?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product?.brand?.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -34,36 +38,23 @@ const Home = () => {
     }
   };
 
-  const getAllProducts = async function () {
-    try {
-      const res = await fetch(BASE_URL + "/products?limit=50");
-      const data = await res.json();
-      setProducts(data.products);
-      setFilteredProducts(data.products);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const categoryBeauty = products.filter(
+  const categoryBeauty = products?.products?.filter(
     (product) => product.category === categories[0]?.slug,
   );
 
-  const categoryFragrance = products.filter(
+  const categoryFragrance = products?.products?.filter(
     (product) => product.category === categories[1]?.slug,
   );
 
-  const categoryFurniture = products.filter(
+  const categoryFurniture = products?.products?.filter(
     (product) => product.category === categories[2]?.slug,
   );
 
-  const categoryGrocery = products.filter(
+  const categoryGrocery = products?.products?.filter(
     (product) => product.category === categories[3]?.slug,
   );
 
-  if ((!filteredProducts || filteredProducts.length == 0) && !isLoading)
+  if ((!filteredProducts || filteredProducts?.length == 0) && !isLoading)
     return (
       <>
         <h1 className="font-medium text-2xl text-center bg-white shadow-lg p-2 uppercase">
@@ -79,7 +70,7 @@ const Home = () => {
         <h1 className="font-medium text-2xl text-center bg-white shadow-lg p-2 uppercase">
           SEE OUR PRODUCTS
         </h1>
-        {filteredProducts.length === 0 && isLoading ? (
+        {isLoading ? (
           <ProductShimmer />
         ) : (
           <>

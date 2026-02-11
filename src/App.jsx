@@ -13,28 +13,20 @@ import Sidebar from "./components/Sidebar";
 import { CategoryContext } from "./context/CategoryContext";
 import Category from "./pages/Category";
 import useLocalStorage from "./customHook/useLocalStorage";
+import useFetch from "./customHook/useFetch";
+import { BASE_URL } from "./utils/apiURL";
 
 function App() {
   const [searchProduct, setSearchProduct] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebar, setIsSidebar] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    getAllCategories();
-  }, []);
 
   const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
-
-  const getAllCategories = async function () {
-    try {
-      const res = await fetch("https://dummyjson.com/products/categories");
-      const data = await res.json();
-      setCategories(data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const {
+    data: categories,
+    isLoading,
+    isError,
+  } = useFetch(BASE_URL + "/products/categories");
 
   const handleSearch = function () {
     setSearchQuery(searchProduct);

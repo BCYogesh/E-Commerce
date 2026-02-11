@@ -1,30 +1,19 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductList from "../components/ProductList";
 import ProductShimmer from "../components/ProductShimmer";
+import useFetch from "../customHook/useFetch";
+import { BASE_URL } from "../utils/apiURL";
 
 const Category = () => {
   const { category } = useParams();
-  const [categoryProducts, setCategoryProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    getCategoryProducts();
-  }, [category]);
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useFetch(BASE_URL + "/products/category/" + category);
 
-  const getCategoryProducts = async function () {
-    try {
-      const res = await fetch(
-        "https://dummyjson.com/products/category/" + category,
-      );
-      const data = await res.json();
-      setCategoryProducts(data?.products);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const categoryProducts = products?.products;
 
   if (!categoryProducts || (categoryProducts.length == 0 && !isLoading))
     return (

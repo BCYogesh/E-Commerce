@@ -3,29 +3,19 @@ import { useParams } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { toast } from "react-toastify";
 import ProductDetailShimmer from "../components/ProductDetailShimmer";
+import useFetch from "../customHook/useFetch";
+import { BASE_URL } from "../utils/apiURL";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [productData, setProductData] = useState([]);
   const [quantity, setQuantity] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
   const { setCartItems } = useContext(CartContext);
-  // To fetch product
-  useEffect(() => {
-    GetSingleProduct();
-  }, []);
 
-  const GetSingleProduct = async function () {
-    try {
-      const res = await fetch("https://dummyjson.com/products/" + id);
-      const data = await res.json();
-      setProductData(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    data: productData,
+    isLoading,
+    isError,
+  } = useFetch(BASE_URL + "/products/" + id);
 
   const decreaseQuantity = function () {
     setQuantity((prevQty) => {
