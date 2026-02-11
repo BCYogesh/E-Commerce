@@ -28,49 +28,74 @@ const Cart = () => {
   }
 
   return (
-    <div className="grow">
-      <ul className="grid grid-cols-6 p-4 font-semibold border-b bg-amber-200 sticky top-16">
-        <li>S.No</li>
-        <li>Product</li>
-        <li>Unit Price</li>
-        <li>Quantity</li>
-        <li>Total Price</li>
-        <li>Actions</li>
-      </ul>
-      {cartItems.map((item, index) => (
-        <ul
-          key={item.id}
-          className="grid grid-cols-6 p-4 border-b items-center"
-        >
-          <li>{index + 1}</li>
-          <li>{item.title}</li>
-          <li>${item.price}</li>
-          <li>{item.quantity}</li>
-          <li className="text-orange-600 font-semibold">
-            ${item.quantity * item.price}
-          </li>
-          <li
-            className="hover:text-orange-600 cursor-pointer"
-            onClick={() => removeCartItem(item.id)}
-          >
-            Delete
-          </li>
-        </ul>
-      ))}
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+        {/* HEADER */}
+        <div className="grid grid-cols-6 gap-4 bg-amber-200 px-6 py-4 font-semibold">
+          <span>#</span>
+          <span>Product</span>
+          <span>Price</span>
+          <span>Qty</span>
+          <span>Total</span>
+          <span>Action</span>
+        </div>
 
-      <div className="flex justify-between p-8">
-        <button
-          onClick={() => setCartItems([])}
-          className="bg-orange-200 p-2 px-4 border cursor-pointer border-black font-semibold rounded-lg"
-        >
-          Clear cart
-        </button>
-        <h3>
-          Total Items {cartCount} :{" "}
-          <span className="text-orange-600 font-semibold">
-            ${totalPrice.toFixed(2)}{" "}
-          </span>
-        </h3>
+        {/* CART ITEMS */}
+        {cartItems.map((item, index) => (
+          <div
+            key={item.id}
+            className="grid grid-cols-6 gap-4 items-center px-6 py-4 border-b hover:bg-gray-50 transition"
+          >
+            <span>{index + 1}</span>
+
+            <span className="font-medium">{item.title}</span>
+
+            <span>${item.price}</span>
+
+            {/* Quantity */}
+            <div className="flex items-center gap-2">
+              <button className="px-2 border rounded hover:bg-gray-200">
+                −
+              </button>
+              <span>{item.quantity}</span>
+              <button className="px-2 border rounded hover:bg-gray-200">
+                +
+              </button>
+            </div>
+
+            <span className="font-semibold text-orange-600">
+              ${(item.price * item.quantity).toFixed(2)}
+            </span>
+
+            <button
+              onClick={() => removeCartItem(item.id)}
+              className="text-red-500 hover:underline"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+
+        {/* FOOTER */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-6 bg-gray-50">
+          <button
+            onClick={() => setCartItems([])}
+            className="border border-red-500 text-red-500 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+          >
+            Clear Cart
+          </button>
+
+          <div className="text-lg font-semibold">
+            Total ({cartCount} items):{" "}
+            <span className="text-orange-600 text-xl">
+              ${totalPrice.toFixed(2)}
+            </span>
+          </div>
+
+          <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition">
+            Checkout
+          </button>
+        </div>
       </div>
     </div>
   );

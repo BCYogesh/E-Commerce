@@ -30,4 +30,6 @@ https://dummyjson.com/products
   - Calculate total price
 - Develop footer page
 - Develop Shimmer UI for better user experience
-
+- useLocalStorage && useFetch custom hook
+  - To avoid repeated code
+- Make UI better for all components

@@ -59,59 +59,80 @@ const ProductDetail = () => {
   return isLoading ? (
     <ProductDetailShimmer />
   ) : (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="product-detail flex   px-2 bg-white h-96 w-[90%] rounded-lg">
-        {productData?.images && (
-          <img
-            className="h-full w-full object-contain"
-            src={productData?.images[0]}
-            alt={productData?.title}
-          />
-        )}
-        <div className="product-detail-r">
-          <div className="title pt-8">
-            <b>{productData?.title}</b>
-          </div>
-          <div className="desc pt-4">
-            <p>{productData?.description}</p>
-          </div>
-          <div className="rating pt-4 inline-grid gap-5">
-            <p className="">
-              <span className="text-orange-400 font-bold"> Rating :</span>{" "}
-              {productData?.rating} |{" "}
-              <span className="text-orange-400 font-bold">Brand : </span>
-              {productData?.brand} |
-              <span className="text-orange-400 font-bold">Category : </span>{" "}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+      <div className="bg-white max-w-6xl w-full rounded-2xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+        {/* LEFT : IMAGE */}
+        <div className="bg-gray-50 rounded-xl flex items-center justify-center p-6">
+          {productData?.images && (
+            <img
+              src={productData.images[0]}
+              alt={productData.title}
+              className="h-80 object-contain hover:scale-105 transition-transform"
+            />
+          )}
+        </div>
+
+        {/* RIGHT : DETAILS */}
+        <div className="space-y-5">
+          {/* TITLE */}
+          <h1 className="text-2xl font-bold">{productData?.title}</h1>
+
+          {/* DESCRIPTION */}
+          <p className="text-gray-600 leading-relaxed">
+            {productData?.description}
+          </p>
+
+          {/* META */}
+          <div className="flex flex-wrap gap-4 text-sm">
+            <span>
+              <b className="text-orange-500">Rating:</b> ⭐{" "}
+              {productData?.rating}
+            </span>
+            <span>
+              <b className="text-orange-500">Brand:</b> {productData?.brand}
+            </span>
+            <span>
+              <b className="text-orange-500">Category:</b>{" "}
               {productData?.category}
-            </p>
-            <p>
-              <span className="text-orange-400 font-bold">Price : </span>${" "}
-              {productData?.price}
-            </p>
+            </span>
           </div>
-          <div className="quantity flex gap-5 pt-4 text-center">
-            <button
-              className="border border-black px-4 cursor-pointer"
-              onClick={() => decreaseQuantity()}
-            >
-              -
-            </button>
-            <p className="border border-black px-4">{quantity}</p>
-            <button
-              className="border border-black px-4 cursor-pointer"
-              onClick={() => increaseQuantity()}
-            >
-              +
-            </button>
+
+          {/* PRICE */}
+          <p className="text-3xl font-bold text-orange-600">
+            ${productData?.price}
+          </p>
+
+          {/* QUANTITY */}
+          <div className="flex items-center gap-4">
+            <span className="font-medium">Quantity:</span>
+
+            <div className="flex items-center border rounded-full overflow-hidden">
+              <button
+                className="px-4 py-1 hover:bg-gray-200"
+                onClick={decreaseQuantity}
+              >
+                −
+              </button>
+              <span className="px-4">{quantity}</span>
+              <button
+                className="px-4 py-1 hover:bg-gray-200"
+                onClick={increaseQuantity}
+              >
+                +
+              </button>
+            </div>
           </div>
-          <div className="actions flex gap-5 pt-4">
+
+          {/* ACTIONS */}
+          <div className="flex gap-4 pt-4">
             <button
-              className="px-4 py-2 bg-orange-300 text-black cursor-pointer"
               onClick={addToCart}
+              className="flex-1 bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
             >
-              Add to cart
+              Add to Cart
             </button>
-            <button className="px-4 py-2 bg-orange-400 text-black cursor-pointer">
+
+            <button className="flex-1 bg-black text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition">
               Buy Now
             </button>
           </div>

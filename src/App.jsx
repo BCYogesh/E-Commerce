@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import { CartContext } from "./context/CartContext";
 import { SearchContext } from "./context/SearchContext";
@@ -22,11 +22,7 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(false);
 
   const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
-  const {
-    data: categories,
-    isLoading,
-    isError,
-  } = useFetch(BASE_URL + "/products/categories");
+  const { data: categories } = useFetch(BASE_URL + "/products/categories");
 
   const handleSearch = function () {
     setSearchQuery(searchProduct);
