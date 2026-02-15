@@ -33,3 +33,5 @@ https://dummyjson.com/products
 - useLocalStorage && useFetch custom hook
   - To avoid repeated code
 - Make UI better for all components
+- useOnlineStatus hook to whether the shows the user was internet is connected or not
+  - If not, It will show that OOPS! please check your internet connection

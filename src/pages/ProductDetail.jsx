@@ -1,22 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import { toast } from "react-toastify";
 import ProductDetailShimmer from "../components/ProductDetailShimmer";
 import useFetch from "../customHook/useFetch";
 import { BASE_URL } from "../utils/apiURL";
+import { toast } from "react-toastify";
+import useOnlineStatus from "../customHook/useOnlineStatus";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const { setCartItems } = useContext(CartContext);
-
-  const {
-    data: productData,
-    isLoading,
-    isError,
-  } = useFetch(BASE_URL + "/products/" + id);
-
+  const { addToCart } = useContext(CartContext);
   const decreaseQuantity = function () {
     setQuantity((prevQty) => {
       let tempQty = prevQty - 1;
@@ -32,29 +26,21 @@ const ProductDetail = () => {
       return tempQty;
     });
   };
+  const {
+    data: productData,
+    isLoading,
+    isError,
+  } = useFetch(BASE_URL + "/products/" + id);
 
-  const addToCart = function () {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === productData.id);
+  const onlineStatus = useOnlineStatus();
 
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.id === productData.id ? { ...item, quantity: quantity } : item,
-        );
-      }
-      return [
-        ...prevItems,
-        {
-          id: productData.id,
-          quantity: quantity,
-          price: productData.price,
-          title: productData.title,
-          image: productData.images[0],
-        },
-      ];
-    });
-    toast.success("Adding to shopping cart");
-  };
+  console.log(onlineStatus);
+  if (onlineStatus === false)
+    return (
+      <h1 className="text-center text-2xl p-8">
+        OOPS! Offline please check your internet connection.
+      </h1>
+    );
 
   return isLoading ? (
     <ProductDetailShimmer />
@@ -126,7 +112,7 @@ const ProductDetail = () => {
           {/* ACTIONS */}
           <div className="flex gap-4 pt-4">
             <button
-              onClick={addToCart}
+              onClick={() => addToCart(productData, quantity)}
               className="flex-1 bg-orange-500 text-white py-3 rounded-xl font-semibold hover:bg-orange-600 transition"
             >
               Add to Cart

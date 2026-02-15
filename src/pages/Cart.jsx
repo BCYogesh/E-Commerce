@@ -54,13 +54,7 @@ const Cart = () => {
 
             {/* Quantity */}
             <div className="flex items-center gap-2">
-              <button className="px-2 border rounded hover:bg-gray-200">
-                −
-              </button>
               <span>{item.quantity}</span>
-              <button className="px-2 border rounded hover:bg-gray-200">
-                +
-              </button>
             </div>
 
             <span className="font-semibold text-orange-600">

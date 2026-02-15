@@ -5,6 +5,8 @@ import { SearchContext } from "../context/SearchContext";
 import { CategoryContext } from "../context/CategoryContext";
 import ProductShimmer from "../components/ProductShimmer";
 import useFetch from "../customHook/useFetch";
+import getCategoriesItems from "../utils/getCategories";
+import useOnlineStatus from "../customHook/useOnlineStatus";
 
 const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -16,6 +18,7 @@ const Home = () => {
 
   const { searchQuery } = useContext(SearchContext);
   const { categories } = useContext(CategoryContext);
+  const onlineStatus = useOnlineStatus();
 
   useEffect(() => {
     setFilteredProducts(products?.products);
@@ -38,22 +41,32 @@ const Home = () => {
     }
   };
 
-  const categoryBeauty = products?.products?.filter(
-    (product) => product.category === categories[0]?.slug,
-  );
+  const categoryBeauty =
+    categories?.length > 0
+      ? getCategoriesItems(products?.products, categories[0]?.slug)
+      : [];
 
-  const categoryFragrance = products?.products?.filter(
-    (product) => product.category === categories[1]?.slug,
-  );
+  const categoryFragrance =
+    categories?.length > 0
+      ? getCategoriesItems(products?.products, categories[1]?.slug)
+      : [];
 
-  const categoryFurniture = products?.products?.filter(
-    (product) => product.category === categories[2]?.slug,
-  );
+  const categoryFurniture =
+    categories?.length > 0
+      ? getCategoriesItems(products?.products, categories[2]?.slug)
+      : [];
 
-  const categoryGrocery = products?.products?.filter(
-    (product) => product.category === categories[3]?.slug,
-  );
+  const categoryGrocery =
+    categories?.length > 0
+      ? getCategoriesItems(products?.products, categories[3]?.slug)
+      : [];
 
+  if (onlineStatus === false)
+    return (
+      <h1 className="text-center text-2xl p-8">
+        OOPS! Offline please check your internet connection.
+      </h1>
+    );
   if ((!filteredProducts || filteredProducts?.length == 0) && !isLoading)
     return (
       <>
@@ -75,13 +88,13 @@ const Home = () => {
         ) : (
           <>
             <ProductList filteredProducts={filteredProducts} />
-            {!searchQuery && (
+            {!searchQuery && categories && (
               <>
                 <div>
                   <h1 className="font-medium text-2xl text-center bg-white shadow-lg p-2 uppercase">
                     SEE OUR {categories[0]?.slug}
                   </h1>
-                  <ProductList filteredProducts={categoryBeauty} />;
+                  <ProductList filteredProducts={categoryBeauty} />
                 </div>
                 <div>
                   <h1 className="font-medium text-2xl text-center bg-white shadow-lg p-2 uppercase">

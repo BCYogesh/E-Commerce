@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 import { CartContext } from "./context/CartContext";
 import { SearchContext } from "./context/SearchContext";
 import Cart from "./pages/Cart";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import { CategoryContext } from "./context/CategoryContext";
@@ -30,8 +30,38 @@ function App() {
 
   const cartCount = cartItems.length ?? 0;
 
+  const addToCart = function (product, quantity = 1) {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === product.id ? { ...item, quantity: quantity } : item,
+        );
+      }
+      return [
+        ...prevItems,
+        {
+          id: product.id,
+          quantity: quantity,
+          price: product.price,
+          title: product.title,
+          image: product.images[0],
+        },
+      ];
+    });
+    toast.success("Adding to shopping cart");
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, setCartItems, cartCount }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        setCartItems,
+        cartCount,
+        addToCart,
+      }}
+    >
       <CategoryContext.Provider value={{ categories }}>
         <SearchContext.Provider
           value={{ searchProduct, setSearchProduct, handleSearch, searchQuery }}
